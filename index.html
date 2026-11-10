@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AccLEADS | Bookkeeping, Catch-Up, Year-End &amp; Tax Returns for Canadians</title>
+<meta name="description" content="AccLEADS handles bookkeeping, catch-up books, year-end files, T1, T2, T4 and T5 returns, and compilation engagement support for Canadian businesses and CPA firms. Book a free review.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;1,6..72,500&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* AccLEADS redesign: ledger-ruled pages, pine ink on cool paper, brass for form codes and due dates.
+   All CSS and JS are inline. No external images, no build step. */
+:root{
+  --paper:#F4F7F5; --surface:#FFFFFF; --alt:#E8F0EB; --ink:#14211D; --muted:#55665E;
+  --rule:#D2DDD7; --rule-strong:#B9C8BE;
+  --pine:#1F5C4A; --pine-deep:#163F33; --pine-ink:#0E2E25;
+  --brass:#8F6A1A; --brass-bright:#B98A2E; --brass-soft:#F4E7C6;
+  --on-pine:#F1F6F3; --band-fg:#F1F6F3;
+  --shadow-sm:0 1px 2px rgba(20,33,29,.06),0 4px 14px -8px rgba(20,33,29,.18);
+  --shadow-md:0 2px 4px rgba(20,33,29,.06),0 16px 36px -18px rgba(20,33,29,.35);
+  --radius:6px;
+  --display:"Newsreader", Georgia, "Times New Roman", serif;
+  --body:"Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0E1614; --surface:#16211E; --alt:#12201B; --ink:#E3ECE7; --muted:#9BAEA6;
+    --rule:#293A34; --rule-strong:#3A4F47;
+    --pine:#63B596; --pine-deep:#0B2A21; --pine-ink:#0B2A21;
+    --brass:#D9AE5B; --brass-bright:#E3BE77; --brass-soft:#382E15;
+    --on-pine:#0B2A21; color-scheme:dark}
+}
+:root[data-theme="dark"]{
+  --paper:#0E1614; --surface:#16211E; --alt:#12201B; --ink:#E3ECE7; --muted:#9BAEA6;
+  --rule:#293A34; --rule-strong:#3A4F47;
+  --pine:#63B596; --pine-deep:#0B2A21; --pine-ink:#0B2A21;
+  --brass:#D9AE5B; --brass-bright:#E3BE77; --brass-soft:#382E15;
+  --on-pine:#0B2A21; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font:400 16px/1.62 var(--body);-webkit-font-smoothing:antialiased;margin:0}
+h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.12;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.35rem,5.2vw,3.75rem);letter-spacing:-.01em}
+h2{font-size:clamp(1.65rem,3vw,2.25rem)}
+h3{font-size:1.28rem}
+p{margin:0 0 1em;max-width:65ch}
+a{color:var(--pine)}
+a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--brass);outline-offset:2px;border-radius:2px}
+.mono{font-family:var(--mono);font-size:.9em}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.narrow{max-width:840px}
+.eyebrow{font:500 .76rem/1.4 var(--mono);text-transform:uppercase;letter-spacing:.13em;color:var(--brass);margin:0 0 1rem;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.eyebrow::before{content:"";width:1.6rem;height:2px;background:var(--brass);flex:none}
+.form{display:inline-block;font:500 .74rem/1 var(--mono);letter-spacing:.06em;color:var(--brass);background:var(--brass-soft);border:1px solid color-mix(in srgb,var(--brass) 35%,transparent);padding:.38rem .5rem;border-radius:3px;white-space:nowrap}
+.skip{position:absolute;left:-999px;top:0;background:var(--pine);color:var(--on-pine);padding:.7rem 1rem;z-index:50;border-radius:0 0 4px 0;font-weight:600}
+.skip:focus{left:0}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;background:var(--pine);color:var(--on-pine);font:600 .95rem/1 var(--body);padding:1rem 1.4rem;border-radius:var(--radius);text-decoration:none;border:1px solid var(--pine);cursor:pointer;transition:background .15s,transform .15s,box-shadow .15s}
+.btn:hover{background:var(--pine-deep);border-color:var(--pine-deep);box-shadow:var(--shadow-sm)}
+.btn:active{transform:translateY(1px)}
+.btn-ghost{background:transparent;color:var(--pine)}
+.btn-ghost:hover{background:var(--alt);color:var(--pine)}
+.btn-light{background:var(--band-fg);color:#163F33;border-color:var(--band-fg)}
+.btn-light:hover{background:#fff;color:#163F33}
+.btn-sm{padding:.68rem 1rem;font-size:.88rem}
+.actions{display:flex;gap:.75rem;flex-wrap:wrap;margin:1.7rem 0}
+.link{font-weight:600;text-decoration:none}
+.link:hover{text-decoration:underline}
+
+/* header */
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule);transition:box-shadow .2s}
+.top.scrolled{box-shadow:0 6px 24px -12px rgba(20,33,29,.28)}
+.top-in{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:70px}
+.brand{display:flex;align-items:center;gap:.65rem;text-decoration:none;color:var(--ink)}
+.brand b{font:600 1.25rem/1 var(--display);display:block}
+.brand small{font:500 .64rem/1.4 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
+.mark{width:42px;height:42px;display:block;flex:none}
+.mark svg{display:block}
+.m-bg{fill:#14211D;stroke:var(--rule);stroke-width:1}
+.m-a{stroke:#F1F6F3}
+.m-rule{stroke:#E0B65E}
+.nav{display:flex;align-items:center;gap:1.35rem}
+.nav a:not(.btn){color:var(--ink);text-decoration:none;font-weight:500;font-size:.95rem;padding:.35rem 0;border-bottom:2px solid transparent}
+.nav a:not(.btn):hover,.nav a.on{border-color:var(--brass)}
+.theme-btn{background:none;border:1px solid var(--rule);color:var(--ink);font:600 .85rem var(--body);padding:.5rem .7rem;border-radius:4px;cursor:pointer}
+.theme-btn:hover{border-color:var(--pine)}
+.menu-btn{display:none;background:none;border:1px solid var(--rule);color:var(--ink);font:600 .9rem var(--body);padding:.55rem .85rem;border-radius:4px;cursor:pointer}
+@media (max-width:920px){
+  .menu-btn{display:block}
+  .nav{display:none;position:absolute;left:0;right:0;top:100%;flex-direction:column;align-items:stretch;gap:0;background:var(--surface);border-bottom:1px solid var(--rule);padding:.5rem max(20px,env(safe-area-inset-right,0px)) 1rem max(20px,env(safe-area-inset-left,0px));box-shadow:var(--shadow-md)}
+  .nav.open{display:flex}
+  .nav a:not(.btn){padding:.85rem 0;border-bottom:1px solid var(--rule)}
+  .nav .btn{margin-top:.9rem}
+  .nav .theme-btn{margin-top:.9rem;align-self:flex-start}
+}
+
+/* hero */
+.hero{background:linear-gradient(180deg,var(--surface) 0%,var(--paper) 100%);border-bottom:1px solid var(--rule)}
+.hero-in{display:grid;grid-template-columns:1.08fr .92fr;gap:3.5rem;align-items:center;padding-block:4.8rem 4.2rem}
+.hero h1{margin-bottom:1.25rem}
+.hero h1 em{font-style:italic;color:var(--pine)}
+.lede{font-size:1.14rem;color:var(--muted);max-width:58ch}
+.proof{list-style:none;padding:0;margin:0;display:grid;gap:.5rem;font-size:.94rem;color:var(--muted)}
+.proof li{display:flex;gap:.6rem;align-items:baseline}
+.proof li::before{content:"✓";color:var(--pine);font-weight:700;flex:none}
+@media (max-width:900px){.hero-in{grid-template-columns:1fr;gap:2.5rem;padding-block:3.2rem}}
+
+/* filing dashboard (hero visual, pure HTML/CSS) */
+.dash{background:var(--surface);border:1px solid var(--rule);border-radius:8px;box-shadow:var(--shadow-md);overflow:hidden;min-width:0}
+.dash-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem 1.25rem;background:var(--pine-deep);color:var(--band-fg)}
+.dash-head strong{font-family:var(--display);font-size:1.08rem;font-weight:600}
+.dash-head .mono{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;opacity:.85}
+.dash-status{display:flex;gap:.5rem;flex-wrap:wrap;padding:.9rem 1.25rem;border-bottom:1px solid var(--rule);background:var(--alt)}
+.chip{display:inline-flex;align-items:center;gap:.4rem;font:500 .78rem/1.3 var(--mono);color:var(--ink);background:var(--surface);border:1px solid var(--rule-strong);border-radius:999px;padding:.35rem .7rem}
+.chip .dot{width:.5rem;height:.5rem;border-radius:50%;background:var(--pine);flex:none}
+.dash table{width:100%;border-collapse:collapse;font-size:.92rem;font-variant-numeric:tabular-nums}
+.dash th{text-align:left;font:500 .68rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:.85rem 1.25rem .5rem;border-bottom:2px solid var(--ink)}
+.dash td{padding:.85rem 1.25rem;border-bottom:1px solid var(--rule);vertical-align:top}
+.dash td small{display:block;color:var(--muted);font-size:.78rem;line-height:1.4;margin-top:.2rem}
+.dash .due{font-weight:600;color:var(--brass);white-space:nowrap}
+.dash-foot{font-size:.8rem;color:var(--muted);padding:.8rem 1.25rem;margin:0;border-top:1px double var(--rule);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.dash-foot b{color:var(--pine)}
+@media (max-width:520px){.dash .due{white-space:normal}.dash td,.dash th{padding-left:.85rem;padding-right:.85rem}}
+
+/* sections */
+.sec{padding-block:4.8rem;border-bottom:1px solid var(--rule)}
+.sec.alt{background:var(--alt)}
+.sec-head{margin-bottom:2.4rem;max-width:720px}
+.split{display:grid;grid-template-columns:.9fr 1.1fr;gap:3rem;align-items:start}
+.split .btn{margin-top:.5rem}
+@media (max-width:820px){.split{grid-template-columns:1fr;gap:1.2rem}}
+
+/* service cards */
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:1.1rem}
+.svc{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:1.7rem 1.5rem 1.5rem;text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:.8rem;transition:transform .18s,box-shadow .18s,border-color .18s}
+.svc:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--pine)}
+.svc .svc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:.75rem}
+.svc .num{font:500 .8rem/1 var(--mono);letter-spacing:.08em;color:var(--brass)}
+.svc .icon{width:44px;height:44px;flex:none;border-radius:8px;background:var(--alt);display:flex;align-items:center;justify-content:center;color:var(--pine)}
+.svc .icon svg{width:24px;height:24px}
+.svc h3{font-size:1.3rem}
+.svc p{color:var(--muted);font-size:.94rem;margin:0;flex:1}
+.svc .more{font-weight:600;font-size:.9rem;color:var(--pine);display:inline-flex;gap:.35rem;align-items:center}
+.svc:hover .more{text-decoration:underline}
+.svc-cta{background:var(--pine);color:var(--on-pine);border-color:var(--pine)}
+.svc-cta:hover{background:var(--pine-deep);border-color:var(--pine-deep)}
+.svc-cta p,.svc-cta .more{color:inherit;opacity:.92}
+.svc-cta .form{background:transparent;color:inherit;border-color:currentColor}
+.svc-cta .num{color:var(--brass-bright)}
+
+/* audiences */
+.aud{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.aud-card{background:var(--surface);border:1px solid var(--rule);border-top:3px solid var(--pine);padding:1.9rem;border-radius:4px;min-width:0}
+.aud-card h3{margin-bottom:.6rem}
+.aud-card p{color:var(--muted)}
+@media (max-width:820px){.aud{grid-template-columns:1fr}}
+
+.ticks{list-style:none;padding:0;margin:0 0 1.2rem;display:grid;gap:.55rem}
+.ticks li{padding-left:1.7rem;position:relative}
+.ticks li::before{content:"";position:absolute;left:0;top:.55em;width:.85rem;height:.42rem;border-left:2px solid var(--pine);border-bottom:2px solid var(--pine);transform:rotate(-45deg)}
+.plain{list-style:none;padding:0;margin:0;display:grid;gap:.5rem;font-size:.94rem}
+.plain li{padding-bottom:.5rem;border-bottom:1px dashed var(--rule)}
+.plain li:last-child{border:0;padding:0}
+
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem 2.5rem;margin:0}
+.why dt{font:600 1.15rem/1.3 var(--display);margin-bottom:.4rem;padding-top:.9rem;border-top:2px solid var(--ink)}
+.why dd{margin:0;color:var(--muted);font-size:.95rem}
+@media (max-width:900px){.why{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.why{grid-template-columns:1fr}}
+
+/* process timeline */
+.steps{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(4,1fr);gap:1.6rem;counter-reset:s}
+.steps li{position:relative;padding-top:1.1rem}
+.steps li::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--rule)}
+.steps li::after{content:"";position:absolute;top:-4px;left:0;width:10px;height:10px;border-radius:50%;background:var(--brass);border:2px solid var(--paper)}
+.steps .n{display:block;color:var(--brass);margin-bottom:.6rem;font-size:.85rem}
+.steps h3{margin-bottom:.45rem}
+.steps p{color:var(--muted);font-size:.94rem}
+@media (max-width:900px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.steps{grid-template-columns:1fr}}
+
+.band{background:var(--pine-deep);color:var(--band-fg)}
+.band-in{display:flex;justify-content:space-between;align-items:center;gap:2rem;padding-block:3.6rem;flex-wrap:wrap}
+.band h2{color:var(--band-fg);margin-bottom:.6rem}
+.band p{opacity:.88;margin:0}
+.band-in>div{flex:1 1 420px;min-width:0}
+
+/* inner pages */
+.page-hero{background:var(--surface);border-bottom:1px solid var(--rule);padding-block:4rem 3.2rem}
+.page-hero h1{font-size:clamp(2rem,4.2vw,3.1rem);max-width:22ch;margin-bottom:1rem}
+.crumb{display:inline-block;font-size:.88rem;font-weight:600;text-decoration:none;margin-bottom:1.4rem}
+.detail{display:grid;grid-template-columns:1.3fr .7fr;gap:3rem;align-items:start}
+.detail-main{min-width:0}
+.detail-main h2{margin-bottom:1.4rem}
+.detail-side,.contact-side{display:grid;gap:1rem;min-width:0;align-content:start}
+.side-block{background:var(--surface);border:1px solid var(--rule);padding:1.35rem;border-radius:6px}
+.side-block h3{font:500 .72rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--brass);margin-bottom:.8rem}
+.side-block p{margin:0;font-size:.95rem}
+.timing{border-left:3px solid var(--brass)}
+.callout{background:var(--brass-soft);border-left:3px solid var(--brass);padding:1rem 1.2rem;font-size:.93rem;margin-top:1.5rem}
+.callout p{margin:0}
+.related{display:flex;flex-wrap:wrap;gap:.6rem}
+.related a{border:1px solid var(--rule);background:var(--surface);padding:.55rem .9rem;border-radius:4px;text-decoration:none;font-weight:500;font-size:.92rem;transition:border-color .15s,box-shadow .15s}
+.related a:hover{border-color:var(--pine);box-shadow:var(--shadow-sm)}
+@media (max-width:860px){.detail{grid-template-columns:1fr}}
+
+/* pricing */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;align-items:stretch}
+.plan{background:var(--surface);border:1px solid var(--rule);padding:2.1rem 1.8rem;display:flex;flex-direction:column;position:relative;border-radius:8px;transition:transform .18s,box-shadow .18s}
+.plan:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.plan.featured{border:2px solid var(--pine);box-shadow:var(--shadow-sm)}
+.plan .tag{position:absolute;top:-.75rem;left:1.8rem;background:var(--pine);color:var(--on-pine);font:500 .68rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:.45rem .65rem;border-radius:2px}
+.plan .price{font:600 1.45rem/1.25 var(--display);color:var(--pine);margin:.7rem 0 .35rem}
+.plan .for{color:var(--muted);font-size:.92rem;min-height:3em}
+.plan ul{flex:1}
+.plan .btn{margin-top:1rem}
+.fine{color:var(--muted);font-size:.9rem;margin-top:1.8rem}
+@media (max-width:900px){.plans{grid-template-columns:1fr}}
+
+/* FAQ accordion */
+details{border-bottom:1px solid var(--rule)}
+details:first-child{border-top:1px solid var(--rule)}
+summary{cursor:pointer;list-style:none;padding:1.25rem 2.4rem 1.25rem 0;font:600 1.15rem/1.35 var(--display);position:relative}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";position:absolute;right:.2rem;top:1.05rem;font:500 1.3rem var(--mono);color:var(--brass)}
+details[open] summary::after{content:"−"}
+details p{color:var(--muted);padding-bottom:1.25rem;margin:0}
+
+.placeholder{border:1px dashed var(--brass);background:var(--brass-soft);padding:1.3rem;font-size:.95rem;border-radius:6px}
+.placeholder strong{display:block;font-family:var(--display);font-size:1.1rem;margin-bottom:.3rem}
+.placeholder p{margin:0;color:var(--muted)}
+
+/* contact */
+.contact{display:grid;grid-template-columns:1.4fr .6fr;gap:2.5rem;align-items:start}
+.form-card{background:var(--surface);border:1px solid var(--rule);padding:2rem;display:grid;gap:1.1rem;min-width:0;border-radius:8px;box-shadow:var(--shadow-sm)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
+label{display:grid;gap:.4rem;font-weight:600;font-size:.88rem}
+.opt{font-weight:400;color:var(--muted)}
+input,select,textarea{font:400 1rem var(--body);color:var(--ink);background:var(--paper);border:1px solid var(--rule);border-radius:4px;padding:.75rem .8rem;width:100%}
+input:focus,select:focus,textarea:focus{border-color:var(--pine)}
+.form-card .btn{justify-self:start}
+.form-status{margin:0;padding:.9rem 1rem;background:var(--alt);border-left:3px solid var(--pine);font-size:.92rem;border-radius:0 4px 4px 0}
+@media (max-width:860px){.contact{grid-template-columns:1fr}}
+@media (max-width:560px){.row2{grid-template-columns:1fr}.form-card{padding:1.3rem}}
+
+/* footer */
+.foot{background:var(--surface);padding-block:3.8rem 1.5rem;border-top:1px solid var(--rule)}
+.foot-in{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.1fr;gap:2.2rem}
+.foot h4{font:500 .72rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--brass);margin:0 0 1rem}
+.foot a:not(.brand){display:block;color:var(--ink);text-decoration:none;font-size:.92rem;padding:.22rem 0}
+.foot a:not(.brand):hover{color:var(--pine)}
+.foot p{font-size:.9rem;color:var(--muted);margin:.8rem 0 0}
+.foot-in>div{min-width:0}
+.legal{border-top:1px solid var(--rule);margin-top:2.5rem;padding-top:1.2rem;display:flex;justify-content:space-between;gap:1.5rem;flex-wrap:wrap}
+.legal p{font-size:.8rem;color:var(--muted);margin:0}
+@media (max-width:900px){.foot-in{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.foot-in{grid-template-columns:1fr}}
+
+.view{animation:fade .25s ease}
+@keyframes fade{from{opacity:.4}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top" id="top"><div class="wrap top-in">
+<a class="brand" href="#home" aria-label="AccLEADS home"><span class="mark" aria-hidden="true"><svg viewBox="0 0 40 40" width="42" height="42"><rect x="0.5" y="0.5" width="39" height="39" rx="4" class="m-bg"/><path d="M10 31 L20 8 L30 31" fill="none" class="m-a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><line x1="13" y1="22" x2="27" y2="22" class="m-rule" stroke-width="2"/><line x1="12" y1="25.5" x2="28" y2="25.5" class="m-rule" stroke-width="2"/></svg></span><span><b>AccLEADS</b><small>Accounting Leaders</small></span></a>
+<button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="main-nav">Menu</button>
+<nav id="main-nav" class="nav" aria-label="Main navigation"><a href="#services" data-nav="services">Services</a><a href="#cpa-firms" data-nav="cpa-firms">For CPA Firms</a><a href="#pricing" data-nav="pricing">Pricing</a><a href="#about" data-nav="about">About</a><a href="#faq" data-nav="faq">FAQ</a><button class="theme-btn" id="theme-btn" type="button" aria-label="Toggle dark mode">Dark mode</button><a class="btn btn-sm" href="#contact">Book a free review</a></nav>
+</div></header>
+<main id="main">
+<!-- ============ HOME ============ -->
+<section class="view" id="v-home" data-title="AccLEADS | Bookkeeping, Catch-Up, Year-End &amp; Tax Returns for Canadians">
+<section class="hero"><div class="wrap hero-in">
+<div class="hero-copy"><p class="eyebrow">Bookkeeping &amp; tax for Canadian businesses and CPA firms</p>
+<h1>Clean books.<br>Accurate returns.<br><em>Filed on time.</em></h1>
+<p class="lede">AccLEADS keeps your books current, brings late years up to date, and prepares your year-end, T1, T2, T4 and T5 filings, so you always know where you stand with the CRA.</p>
+<div class="actions"><a class="btn" href="#contact">Book a free review</a><a class="btn btn-ghost" href="#services">See our services</a></div>
+<ul class="proof"><li>Fixed monthly fees, quoted before we start</li><li>Work done in QuickBooks Online, Xero, Sage or Wave</li><li>Every file reviewed before it leaves our desk</li></ul></div>
+<aside class="dash" aria-label="Filing dashboard with key CRA due dates">
+<div class="dash-head"><strong>Your filing dashboard</strong><span class="mono">Filing calendar</span></div>
+<div class="dash-status" aria-label="Bookkeeping status"><span class="chip"><span class="dot"></span>Books closed by the 15th</span><span class="chip"><span class="dot"></span>Reconciled to the bank</span><span class="chip"><span class="dot"></span>Two-level review</span></div>
+<table><thead><tr><th>Form</th><th>Return</th><th>Due</th></tr></thead><tbody><tr><td><span class="form">T1</span></td><td>Personal return<small>June 15 if self-employed; balance owing still due April 30</small></td><td class="due">April 30</td></tr><tr><td><span class="form">T2</span></td><td>Corporate return<small>Balance owing due 2 months after year-end (3 for many small CCPCs)</small></td><td class="due">6 months after year-end</td></tr><tr><td><span class="form">T4</span></td><td>Employment slips<small>File electronically if more than 5 slips</small></td><td class="due">Last day of February</td></tr><tr><td><span class="form">T5</span></td><td>Investment slips<small>Same electronic-filing threshold as T4</small></td><td class="due">Last day of February</td></tr></tbody></table>
+<p class="dash-foot"><span>Weekend or holiday due dates move to the next business day.</span><span>Next close: <b>by the 15th</b></span></p></aside></div></section>
+
+<section class="sec"><div class="wrap">
+<div class="sec-head"><p class="eyebrow">Services</p><h2>Everything between your bank statement and the CRA</h2></div>
+<div class="svc-grid">
+<a class="svc" href="#bookkeeping"><span class="svc-top"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M9 7h7M9 11h5"/></svg></span><span class="num">01 / Monthly</span></span>
+<h3>Bookkeeping</h3><p>Monthly or quarterly bookkeeping, reconciled to your bank and credit cards, with reports you can read.</p><span class="more">Details <span aria-hidden="true">→</span></span></a>
+<a class="svc" href="#catch-up"><span class="svc-top"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 2.6-6.3"/><path d="M3 4v5h5"/><path d="M12 7v5l3 3"/></svg></span><span class="num">02 / Catch-up</span></span>
+<h3>Catch-Up &amp; Clean-Up</h3><p>Months or years behind? We rebuild the books, reconcile every account and get you ready to file.</p><span class="more">Details <span aria-hidden="true">→</span></span></a>
+<a class="svc" href="#year-end"><span class="svc-top"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M9 16l2 2 4-4"/></svg></span><span class="num">03 / Year-end</span></span>
+<h3>Year-End Files</h3><p>Adjusting entries, working papers and financial statements, packaged for your T2 or your accountant.</p><span class="more">Details <span aria-hidden="true">→</span></span></a>
+<a class="svc" href="#t1-personal-tax"><span class="svc-top"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg></span><span class="num">04 / T1</span></span>
+<h3>T1 Personal Tax Returns</h3><p>Personal returns for employees, self-employed individuals, shareholders and landlords.</p><span class="more">Details <span aria-hidden="true">→</span></span></a>
+<a class="svc" href="#t2-corporate-tax"><span class="svc-top"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="1"/><path d="M9 22v-4h6v4"/><path d="M8 6h8M8 10h8M8 14h5"/></svg></span><span class="num">05 / T2</span></span>
+<h3>T2 Corporate Tax Returns</h3><p>Corporate income tax returns for Canadian-controlled private corporations, prepared from clean books.</p><span class="more">Details <span aria-hidden="true">→</span></span></a>
+<a class="svc" href="#t4-t5-slips"><span class="svc-top"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/></svg></span><span class="num">06 / T4 · T5</span></span>
+<h3>T4 &amp; T5 Slips</h3><p>Year-end payroll and investment-income slips, reconciled and filed electronically with the CRA.</p><span class="more">Details <span aria-hidden="true">→</span></span></a>
+<a class="svc" href="#compilation-engagements"><span class="svc-top"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span><span class="num">07 / CSRS 4200</span></span>
+<h3>Compilation Engagement Support</h3><p>Draft financial statements and working papers prepared for your CPA firm&#x27;s compilation engagement.</p><span class="more">Details <span aria-hidden="true">→</span></span></a>
+<a class="svc svc-cta" href="#contact"><span class="svc-top"><span class="icon" aria-hidden="true" style="background:transparent;color:inherit;border:1px solid currentColor"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg></span><span class="num">Not sure?</span></span><h3>Start with a free review</h3><p>Send us your last statements and return. We will tell you which services you actually need.</p><span class="more">Book a free review <span aria-hidden="true">→</span></span></a>
+</div></div></section>
+
+<section class="sec alt"><div class="wrap split">
+<div><p class="eyebrow">Catch-up</p><h2>Behind on your books? You&#x27;re not the only one.</h2></div>
+<div><p>Most owners don&#x27;t fall behind on purpose. A busy season turns into a busy year, receipts pile up, and the CRA letter arrives before the books are done.</p><p>We fix that in two steps. First we bring every missing month up to date and reconcile it to the bank. Then we keep it that way with monthly bookkeeping, so year-end becomes a routine close instead of a scramble.</p><a class="btn" href="#catch-up">Start with a catch-up review</a></div>
+</div></section>
+
+<section class="sec"><div class="wrap">
+<div class="sec-head"><p class="eyebrow">Who we work with</p><h2>One team for owners. Extra capacity for firms.</h2></div>
+<div class="aud"><article class="aud-card"><h3>For business owners</h3><p>Sole proprietors, incorporated businesses and professionals who want one team for the books and the tax returns.</p><ul class="ticks"><li>Monthly bookkeeping and reconciliations</li><li>Catch-up for missed months or years</li><li>Year-end file and T2 corporate return</li><li>T1 personal return for you and your family</li><li>T4 and T5 slips for salary and dividends</li></ul><a class="link" href="#contact">Get a quote for your business →</a></article><article class="aud-card"><h3>For CPA firms</h3><p>Extra hands for busy season. We prepare the working papers and returns; your firm reviews, signs and keeps the client.</p><ul class="ticks"><li>Year-end working papers ready for review</li><li>Draft financial statements for compilation engagements</li><li>T1 and T2 preparation in your software</li><li>Bookkeeping clean-up before the file reaches you</li><li>Your branding, your client relationship</li></ul><a class="link" href="#cpa-firms">See how firm support works →</a></article></div>
+</div></section>
+
+<section class="sec alt"><div class="wrap">
+<div class="sec-head"><p class="eyebrow">Why AccLEADS</p><h2>Why owners and firms choose AccLEADS</h2></div>
+<dl class="why"><div><dt>Canadian focus</dt><dd>We work to CRA rules and Canadian forms only: GST/HST, payroll source deductions, T-slips, and the T1 and T2 returns.</dd></div><div><dt>Two-level review</dt><dd>One accountant prepares, a second reviews. Reconciliations tie to bank and credit card statements before anything is filed.</dd></div><div><dt>Clear, fixed pricing</dt><dd>You get a written quote after a free review of your records. No hourly surprises.</dd></div><div><dt>Deadline calendar</dt><dd>We track your T1, T2, T4, T5 and GST/HST due dates and remind you of what we need weeks before each one.</dd></div><div><dt>Secure document flow</dt><dd>Documents go through a secure client portal, not email attachments. Access is limited to the people working on your file.</dd></div><div><dt>Plain-language updates</dt><dd>Monthly reports you can read in five minutes, and answers to your questions within one business day.</dd></div></dl>
+</div></section>
+
+<section class="sec"><div class="wrap">
+<div class="sec-head"><p class="eyebrow">How it works</p><h2>From first look to filed return in four steps</h2></div>
+<ol class="steps"><li><span class="n mono">01</span><h3>Free review</h3><p>Share your last statements and returns through a secure link. We look at what&#x27;s done, what&#x27;s missing and what&#x27;s due.</p></li><li><span class="n mono">02</span><h3>Fixed quote</h3><p>You receive a written scope and a fixed fee. Nothing starts until you approve it.</p></li><li><span class="n mono">03</span><h3>We do the work</h3><p>Your file is prepared by one accountant and reviewed by a second. Questions come to you in one batched list, not daily emails.</p></li><li><span class="n mono">04</span><h3>Review and file</h3><p>We walk you through the results, you approve, and we file. Then we set reminders for the next deadline.</p></li></ol></div></section>
+<section class="band"><div class="wrap band-in">
+<div><h2>Find out where your books stand</h2><p>Send us your last bank statement and your most recent return. We&#x27;ll tell you what&#x27;s missing, what&#x27;s due, and what it will cost to fix, at no charge.</p></div>
+<a class="btn btn-light" href="#contact">Book a free review</a></div></section></section>
+
+<!-- ============ SERVICES ============ -->
+<section class="view" id="v-services" data-title="Services | AccLEADS">
+<section class="page-hero"><div class="wrap"><p class="eyebrow">Services</p><h1>What we do, and nothing we don't do well</h1>
+<p class="lede">Seven services, all built around Canadian bookkeeping and CRA filings. Choose one or combine them into a monthly package.</p></div></section>
+<section class="sec"><div class="wrap"><div class="svc-grid">
+<a class="svc" href="#bookkeeping"><span class="svc-top"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M9 7h7M9 11h5"/></svg></span><span class="num">01 / Monthly</span></span>
+<h3>Bookkeeping</h3><p>Monthly or quarterly bookkeeping, reconciled to your bank and credit cards, with reports you can read.</p><span class="more">Details <span aria-hidden="true">→</span></span></a>
+<a class="svc" href="#catch-up"><span class="svc-top"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 2.6-6.3"/><path d="M3 4v5h5"/><path d="M12 7v5l3 3"/></svg></span><span class="num">02 / Catch-up</span></span>
+<h3>Catch-Up &amp; Clean-Up</h3><p>Months or years behind? We rebuild the books, reconcile every account and get you ready to file.</p><span class="more">Details <span aria-hidden="true">→</span></span></a>
+<a class="svc" href="#year-end"><span class="svc-top"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M9 16l2 2 4-4"/></svg></span><span class="num">03 / Year-end</span></span>
+<h3>Year-End Files</h3><p>Adjusting entries, working papers and financial statements, packaged for your T2 or your accountant.</p><span class="more">Details <span aria-hidden="true">→</span></span></a>
+<a class="svc" href="#t1-personal-tax"><span class="svc-top"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg></span><span class="num">04 / T1</span></span>
+<h3>T1 Personal Tax Returns</h3><p>Personal returns for employees, self-employed individuals, shareholders and landlords.</p><span class="more">Details <span aria-hidden="true">→</span></span></a>
+<a class="svc" href="#t2-corporate-tax"><span class="svc-top"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="1"/><path d="M9 22v-4h6v4"/><path d="M8 6h8M8 10h8M8 14h5"/></svg></span><span class="num">05 / T2</span></span>
+<h3>T2 Corporate Tax Returns</h3><p>Corporate income tax returns for Canadian-controlled private corporations, prepared from clean books.</p><span class="more">Details <span aria-hidden="true">→</span></span></a>
+<a class="svc" href="#t4-t5-slips"><span class="svc-top"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/></svg></span><span class="num">06 / T4 · T5</span></span>
+<h3>T4 &amp; T5 Slips</h3><p>Year-end payroll and investment-income slips, reconciled and filed electronically with the CRA.</p><span class="more">Details <span aria-hidden="true">→</span></span></a>
+<a class="svc" href="#compilation-engagements"><span class="svc-top"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span><span class="num">07 / CSRS 4200</span></span>
+<h3>Compilation Engagement Support</h3><p>Draft financial statements and working papers prepared for your CPA firm&#x27;s compilation engagement.</p><span class="more">Details <span aria-hidden="true">→</span></span></a>
+<a class="svc svc-cta" href="#contact"><span class="svc-top"><span class="icon" aria-hidden="true" style="background:transparent;color:inherit;border:1px solid currentColor"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg></span><span class="num">Not sure?</span></span><h3>Start with a free review</h3><p>Send us your last statements and return. We will tell you which services you actually need.</p><span class="more">Book a free review <span aria-hidden="true">→</span></span></a>
+</div></div></section><section class="band"><div class="wrap band-in">
+<div><h2>Find out where your books stand</h2><p>Send us your last bank statement and your most recent return. We&#x27;ll tell you what&#x27;s missing, what&#x27;s due, and what it will cost to fix, at no charge.</p></div>
+<a class="btn btn-light" href="#contact">Book a free review</a></div></section></section>
+
+<!-- ============ BOOKKEEPING ============ -->
+<section class="view" id="v-bookkeeping" data-title="Monthly Bookkeeping Services in Canada | AccLEADS">
+<section class="page-hero"><div class="wrap"><a class="crumb" href="#services">← All services</a>
+<p class="eyebrow"><span class="form">Monthly</span> Bookkeeping</p><h1>Bookkeeping that is done every month, not every April</h1><p class="lede">We record, categorize and reconcile your transactions on a fixed schedule, so your profit, cash and GST/HST position are always current. You get a short monthly report and a set of books that is ready for year-end the day the year closes.</p>
+<div class="actions"><a class="btn" href="#contact">Get a fixed quote</a></div></div></section>
+<section class="sec"><div class="wrap detail">
+<div class="detail-main"><h2>What's included</h2><ul class="ticks"><li>Categorizing bank, credit card and payment-processor transactions</li><li>Monthly bank and credit card reconciliations</li><li>Accounts receivable and accounts payable tracking</li><li>Recording sales, bills and receipts from Dext, Hubdoc or your portal uploads</li><li>GST/HST tracking and preparation of returns for filing</li><li>Payroll journal entries and source deduction tracking</li><li>Monthly profit and loss, balance sheet and a short commentary</li></ul></div>
+<aside class="detail-side">
+<div class="side-block"><h3>Who it's for</h3><ul class="plain"><li>Sole proprietors and incorporated small businesses</li><li>Professionals running a practice (consultants, clinics, contractors)</li><li>Owners who want monthly numbers instead of one yearly surprise</li></ul></div>
+<div class="side-block"><h3>What we'll need</h3><ul class="plain"><li>Read-only access to your bank and credit card feeds</li><li>Access to your accounting software (we can set one up for you)</li><li>Receipts and bills uploaded through the portal or a receipt app</li></ul></div>
+<div class="side-block timing"><h3>Timing</h3><p>Books closed by the 15th of the following month.</p></div>
+</aside></div></section>
+<section class="sec alt"><div class="wrap"><p class="eyebrow">Related services</p><nav class="related" aria-label="Related services"><a href="#catch-up">Catch-Up &amp; Clean-Up</a><a href="#year-end">Year-End Files</a><a href="#t1-personal-tax">T1 Personal Tax Returns</a><a href="#t2-corporate-tax">T2 Corporate Tax Returns</a><a href="#t4-t5-slips">T4 &amp; T5 Slips</a><a href="#compilation-engagements">Compilation Engagement Support</a></nav></div></section>
+<section class="band"><div class="wrap band-in">
+<div><h2>Find out where your books stand</h2><p>Send us your last bank statement and your most recent return. We&#x27;ll tell you what&#x27;s missing, what&#x27;s due, and what it will cost to fix, at no charge.</p></div>
+<a class="btn btn-light" href="#contact">Book a free review</a></div></section></section>
+
+<!-- ============ CATCH-UP ============ -->
+<section class="view" id="v-catch-up" data-title="Catch-Up Bookkeeping &amp; Clean-Up Services | AccLEADS">
+<section class="page-hero"><div class="wrap"><a class="crumb" href="#services">← All services</a>
+<p class="eyebrow"><span class="form">Catch-up</span> Catch-Up &amp; Clean-Up</p><h1>Months or years behind? We&#x27;ll bring every account current.</h1><p class="lede">Catch-up work starts with a review of what you have: bank statements, old returns, CRA notices and whatever is already in your software. We give you a fixed quote, rebuild the missing periods, reconcile every account, and hand you books that are ready for year-end and overdue filings.</p>
+<div class="actions"><a class="btn" href="#contact">Get a fixed quote</a></div></div></section>
+<section class="sec"><div class="wrap detail">
+<div class="detail-main"><h2>What's included</h2><ul class="ticks"><li>Review of prior returns, CRA correspondence and existing books</li><li>Rebuilding missing months or years from bank and card statements</li><li>Correcting miscategorized transactions and duplicate entries</li><li>Reconciling bank, credit card, loan and shareholder accounts</li><li>Clearing old balances in suspense, uncategorized and undeposited funds</li><li>Reconstructing GST/HST collected and input tax credits</li><li>A clean handover into monthly bookkeeping</li></ul></div>
+<aside class="detail-side">
+<div class="side-block"><h3>Who it's for</h3><ul class="plain"><li>Businesses with one or more years of unfiled returns</li><li>Owners whose previous bookkeeper left mid-year</li><li>Companies switching software and needing a clean opening balance</li><li>Anyone who has received a CRA request for information</li></ul></div>
+<div class="side-block"><h3>What we'll need</h3><ul class="plain"><li>Bank and credit card statements for every period being rebuilt</li><li>Any prior financial statements and tax returns</li><li>Copies of CRA notices or letters you have received</li></ul></div>
+<div class="side-block timing"><h3>Timing</h3><p>Most catch-up projects take 2 to 6 weeks, depending on how many years are involved.</p></div>
+</aside></div></section>
+<section class="sec alt"><div class="wrap"><p class="eyebrow">Related services</p><nav class="related" aria-label="Related services"><a href="#bookkeeping">Bookkeeping</a><a href="#year-end">Year-End Files</a><a href="#t1-personal-tax">T1 Personal Tax Returns</a><a href="#t2-corporate-tax">T2 Corporate Tax Returns</a><a href="#t4-t5-slips">T4 &amp; T5 Slips</a><a href="#compilation-engagements">Compilation Engagement Support</a></nav></div></section>
+<section class="band"><div class="wrap band-in">
+<div><h2>Find out where your books stand</h2><p>Send us your last bank statement and your most recent return. We&#x27;ll tell you what&#x27;s missing, what&#x27;s due, and what it will cost to fix, at no charge.</p></div>
+<a class="btn btn-light" href="#contact">Book a free review</a></div></section></section>
+
+<!-- ============ YEAR-END ============ -->
+<section class="view" id="v-year-end" data-title="Year-End Accounting &amp; Financial Statements | AccLEADS">
+<section class="page-hero"><div class="wrap"><a class="crumb" href="#services">← All services</a>
+<p class="eyebrow"><span class="form">Year-end</span> Year-End Files</p><h1>A year-end file your accountant can review in one sitting</h1><p class="lede">We close your fiscal year properly: every balance sheet account supported, every adjustment documented, and a complete set of working papers behind the financial statements. The result goes straight into your T2, or to your CPA firm for review.</p>
+<div class="actions"><a class="btn" href="#contact">Get a fixed quote</a></div></div></section>
+<section class="sec"><div class="wrap detail">
+<div class="detail-main"><h2>What's included</h2><ul class="ticks"><li>Year-end adjusting journal entries (accruals, prepaids, deferrals)</li><li>Capital asset additions, disposals and CCA schedules</li><li>Shareholder loan and due-to/due-from analysis</li><li>Payroll reconciliation to T4 summary</li><li>GST/HST reconciliation to filed returns</li><li>Lead sheets and supporting schedules for every balance</li><li>Draft financial statements and a trial balance export</li></ul></div>
+<aside class="detail-side">
+<div class="side-block"><h3>Who it's for</h3><ul class="plain"><li>Incorporated businesses preparing for their T2</li><li>Owners whose bank or lender needs annual financial statements</li><li>CPA firms that want files prepared to review-ready standard</li></ul></div>
+<div class="side-block"><h3>What we'll need</h3><ul class="plain"><li>Year-end bank, credit card and loan statements</li><li>Fixed asset purchase and sale invoices</li><li>Payroll summaries and filed GST/HST returns</li><li>Prior-year financial statements and T2</li></ul></div>
+<div class="side-block timing"><h3>Timing</h3><p>Usually delivered within 3 to 4 weeks of receiving complete records.</p></div>
+</aside></div></section>
+<section class="sec alt"><div class="wrap"><p class="eyebrow">Related services</p><nav class="related" aria-label="Related services"><a href="#bookkeeping">Bookkeeping</a><a href="#catch-up">Catch-Up &amp; Clean-Up</a><a href="#t1-personal-tax">T1 Personal Tax Returns</a><a href="#t2-corporate-tax">T2 Corporate Tax Returns</a><a href="#t4-t5-slips">T4 &amp; T5 Slips</a><a href="#compilation-engagements">Compilation Engagement Support</a></nav></div></section>
+<section class="band"><div class="wrap band-in">
+<div><h2>Find out where your books stand</h2><p>Send us your last bank statement and your most recent return. We&#x27;ll tell you what&#x27;s missing, what&#x27;s due, and what it will cost to fix, at no charge.</p></div>
+<a class="btn btn-light" href="#contact">Book a free review</a></div></section></section>
+
+<!-- ============ T1 ============ -->
+<section class="view" id="v-t1-personal-tax" data-title="T1 Personal Tax Return Preparation in Canada | AccLEADS">
+<section class="page-hero"><div class="wrap"><a class="crumb" href="#services">← All services</a>
+<p class="eyebrow"><span class="form">T1</span> T1 Personal Tax Returns</p><h1>Personal returns prepared with the whole household in view</h1><p class="lede">We prepare and EFILE your T1 return, and look at the family together so credits, deductions and pension splitting land where they save the most. Self-employed and rental income get their own schedules, properly supported.</p>
+<div class="actions"><a class="btn" href="#contact">Get a fixed quote</a></div></div></section>
+<section class="sec"><div class="wrap detail">
+<div class="detail-main"><h2>What's included</h2><ul class="ticks"><li>T1 returns for individuals and families</li><li>Self-employment income and expenses (T2125)</li><li>Rental income and expenses (T776)</li><li>Employment expenses, moving expenses and childcare claims</li><li>RRSP, FHSA and pension income splitting optimization</li><li>Capital gains, dividends and investment income from T3 and T5 slips</li><li>Prior-year and late-filed returns, and responses to CRA review letters</li></ul></div>
+<aside class="detail-side">
+<div class="side-block"><h3>Who it's for</h3><ul class="plain"><li>Employees with more than a simple T4</li><li>Sole proprietors and freelancers</li><li>Incorporated owners taking salary or dividends</li><li>Landlords and investors</li></ul></div>
+<div class="side-block"><h3>What we'll need</h3><ul class="plain"><li>All tax slips (T4, T4A, T5, T3, T5008 and others)</li><li>Receipts for deductions and credits</li><li>Business or rental income and expense summary</li><li>Your most recent Notice of Assessment</li></ul></div>
+<div class="side-block timing"><h3>Timing</h3><p>Deadline: April 30 for most individuals. Self-employed individuals have until June 15 to file, but any balance owing is still due April 30.</p></div>
+</aside></div></section>
+<section class="sec alt"><div class="wrap"><p class="eyebrow">Related services</p><nav class="related" aria-label="Related services"><a href="#bookkeeping">Bookkeeping</a><a href="#catch-up">Catch-Up &amp; Clean-Up</a><a href="#year-end">Year-End Files</a><a href="#t2-corporate-tax">T2 Corporate Tax Returns</a><a href="#t4-t5-slips">T4 &amp; T5 Slips</a><a href="#compilation-engagements">Compilation Engagement Support</a></nav></div></section>
+<section class="band"><div class="wrap band-in">
+<div><h2>Find out where your books stand</h2><p>Send us your last bank statement and your most recent return. We&#x27;ll tell you what&#x27;s missing, what&#x27;s due, and what it will cost to fix, at no charge.</p></div>
+<a class="btn btn-light" href="#contact">Book a free review</a></div></section></section>
+
+<!-- ============ T2 ============ -->
+<section class="view" id="v-t2-corporate-tax" data-title="T2 Corporate Tax Return Preparation | AccLEADS">
+<section class="page-hero"><div class="wrap"><a class="crumb" href="#services">← All services</a>
+<p class="eyebrow"><span class="form">T2</span> T2 Corporate Tax Returns</p><h1>Your T2, prepared from books we know are right</h1><p class="lede">Because we prepare the year-end file first, your T2 is built from reconciled numbers. We complete the GIFI, CCA and every schedule that applies, look at salary and dividend mix with you, and file electronically before the deadline.</p>
+<div class="actions"><a class="btn" href="#contact">Get a fixed quote</a></div></div></section>
+<section class="sec"><div class="wrap detail">
+<div class="detail-main"><h2>What's included</h2><ul class="ticks"><li>T2 return with GIFI financial statement schedules</li><li>Capital cost allowance (Schedule 8) and asset tracking</li><li>Small business deduction and associated-corporation review</li><li>Shareholder loan, dividend and salary planning</li><li>Provincial schedules and credits</li><li>Tax instalment calculations for the coming year</li><li>Holding company and nil returns</li></ul></div>
+<aside class="detail-side">
+<div class="side-block"><h3>Who it's for</h3><ul class="plain"><li>Canadian-controlled private corporations</li><li>Professional corporations</li><li>Holding companies, including inactive ones that still need to file</li></ul></div>
+<div class="side-block"><h3>What we'll need</h3><ul class="plain"><li>Year-end financial statements (or let us prepare them)</li><li>Prior-year T2 and Notice of Assessment</li><li>Details of any dividends paid or assets bought or sold</li></ul></div>
+<div class="side-block timing"><h3>Timing</h3><p>The T2 is due six months after your fiscal year-end. Any tax owing is due earlier: two months after year-end, or three months for many eligible small CCPCs.</p></div>
+</aside></div></section>
+<section class="sec alt"><div class="wrap"><p class="eyebrow">Related services</p><nav class="related" aria-label="Related services"><a href="#bookkeeping">Bookkeeping</a><a href="#catch-up">Catch-Up &amp; Clean-Up</a><a href="#year-end">Year-End Files</a><a href="#t1-personal-tax">T1 Personal Tax Returns</a><a href="#t4-t5-slips">T4 &amp; T5 Slips</a><a href="#compilation-engagements">Compilation Engagement Support</a></nav></div></section>
+<section class="band"><div class="wrap band-in">
+<div><h2>Find out where your books stand</h2><p>Send us your last bank statement and your most recent return. We&#x27;ll tell you what&#x27;s missing, what&#x27;s due, and what it will cost to fix, at no charge.</p></div>
+<a class="btn btn-light" href="#contact">Book a free review</a></div></section></section>
+
+<!-- ============ T4/T5 ============ -->
+<section class="view" id="v-t4-t5-slips" data-title="T4 and T5 Slip Preparation &amp; Filing | AccLEADS">
+<section class="page-hero"><div class="wrap"><a class="crumb" href="#services">← All services</a>
+<p class="eyebrow"><span class="form">T4 · T5</span> T4 &amp; T5 Slips</p><h1>T4 and T5 slips that match your books and your remittances</h1><p class="lede">We prepare your T4 and T5 slips and summaries, reconcile them to your payroll records and dividend declarations, and file them electronically. Your employees and shareholders get their copies on time, and your T2 and their T1s line up.</p>
+<div class="actions"><a class="btn" href="#contact">Get a fixed quote</a></div></div></section>
+<section class="sec"><div class="wrap detail">
+<div class="detail-main"><h2>What's included</h2><ul class="ticks"><li>T4 slips and T4 Summary for employees and owner-managers</li><li>T5 slips and T5 Summary for dividends and investment income</li><li>T4A slips for contractors and other payments where required</li><li>Reconciliation of CPP, EI and income tax remitted vs. reported</li><li>Electronic filing with the CRA</li><li>Amended slips if something changes after filing</li></ul></div>
+<aside class="detail-side">
+<div class="side-block"><h3>Who it's for</h3><ul class="plain"><li>Employers of any size</li><li>Owner-managers paying themselves salary or dividends</li><li>Corporations paying interest or dividends to shareholders</li></ul></div>
+<div class="side-block"><h3>What we'll need</h3><ul class="plain"><li>Payroll registers or payroll software access</li><li>Remittance history from your CRA payroll account</li><li>Board resolutions or records of dividends declared</li></ul></div>
+<div class="side-block timing"><h3>Timing</h3><p>T4 and T5 slips are due to the CRA and to recipients by the last day of February (or the next business day). More than five slips of a type must be filed electronically.</p></div>
+</aside></div></section>
+<section class="sec alt"><div class="wrap"><p class="eyebrow">Related services</p><nav class="related" aria-label="Related services"><a href="#bookkeeping">Bookkeeping</a><a href="#catch-up">Catch-Up &amp; Clean-Up</a><a href="#year-end">Year-End Files</a><a href="#t1-personal-tax">T1 Personal Tax Returns</a><a href="#t2-corporate-tax">T2 Corporate Tax Returns</a><a href="#compilation-engagements">Compilation Engagement Support</a></nav></div></section>
+<section class="band"><div class="wrap band-in">
+<div><h2>Find out where your books stand</h2><p>Send us your last bank statement and your most recent return. We&#x27;ll tell you what&#x27;s missing, what&#x27;s due, and what it will cost to fix, at no charge.</p></div>
+<a class="btn btn-light" href="#contact">Book a free review</a></div></section></section>
+
+<!-- ============ COMPILATION ============ -->
+<section class="view" id="v-compilation-engagements" data-title="Compilation Engagement (CSRS 4200) Support for CPA Firms | AccLEADS">
+<section class="page-hero"><div class="wrap"><a class="crumb" href="#services">← All services</a>
+<p class="eyebrow"><span class="form">CSRS 4200</span> Compilation Engagement Support</p><h1>Compilation files prepared to CSRS 4200, ready for your review</h1><p class="lede">Since periods ending on or after December 14, 2021, compilation engagements in Canada follow CSRS 4200, which replaced the old Notice to Reader. We prepare the compiled financial information and the supporting file. Your firm accepts the engagement, reviews our work and issues the Compilation Engagement Report.</p>
+<div class="actions"><a class="btn" href="#contact">Get a fixed quote</a></div></div></section>
+<section class="sec"><div class="wrap detail">
+<div class="detail-main"><h2>What's included</h2><ul class="ticks"><li>Draft balance sheet, income statement and retained earnings statement</li><li>Note describing the basis of accounting used</li><li>Lead sheets and supporting schedules for each balance</li><li>Adjusting entries proposed and documented for your approval</li><li>Points for your attention flagged in a review memo</li><li>Files prepared in your firm&#x27;s working-paper software where possible</li></ul><div class="callout"><p>AccLEADS prepares the compiled information and working papers. The compilation engagement itself, including acceptance, practitioner review and the Compilation Engagement Report, is performed and issued by a licensed public accounting firm.</p></div></div>
+<aside class="detail-side">
+<div class="side-block"><h3>Who it's for</h3><ul class="plain"><li>Small and mid-sized CPA firms in busy season</li><li>Sole practitioners who want to take on more compilation clients</li><li>Business owners whose lender asks for compiled statements (we coordinate with your CPA)</li></ul></div>
+<div class="side-block"><h3>What we'll need</h3><ul class="plain"><li>Client trial balance and general ledger, or bookkeeping access</li><li>Prior-year compiled statements</li><li>Your firm&#x27;s templates and checklist, if you have them</li></ul></div>
+<div class="side-block timing"><h3>Timing</h3><p>Typical turnaround is 5 to 10 business days per file once records are complete.</p></div>
+</aside></div></section>
+<section class="sec alt"><div class="wrap"><p class="eyebrow">Related services</p><nav class="related" aria-label="Related services"><a href="#bookkeeping">Bookkeeping</a><a href="#catch-up">Catch-Up &amp; Clean-Up</a><a href="#year-end">Year-End Files</a><a href="#t1-personal-tax">T1 Personal Tax Returns</a><a href="#t2-corporate-tax">T2 Corporate Tax Returns</a><a href="#t4-t5-slips">T4 &amp; T5 Slips</a></nav></div></section>
+<section class="band"><div class="wrap band-in">
+<div><h2>Find out where your books stand</h2><p>Send us your last bank statement and your most recent return. We&#x27;ll tell you what&#x27;s missing, what&#x27;s due, and what it will cost to fix, at no charge.</p></div>
+<a class="btn btn-light" href="#contact">Book a free review</a></div></section></section>
+
+<!-- ============ CPA FIRMS ============ -->
+<section class="view" id="v-cpa-firms" data-title="Outsourced Accounting Support for Canadian CPA Firms | AccLEADS">
+<section class="page-hero"><div class="wrap"><p class="eyebrow">For CPA firms</p><h1>More capacity for your firm, without another hire</h1><p class="lede">Busy season shouldn&#x27;t decide how many clients you can take on. AccLEADS works as an extension of your team: we prepare, you review and sign. Your clients deal only with you.</p>
+<div class="actions"><a class="btn" href="#contact">Book a call about capacity</a></div></div></section>
+<section class="sec"><div class="wrap"><div class="sec-head"><h2>How the partnership works</h2></div><ol class="steps"><li><span class="n mono">01</span><h3>Send the file</h3><p>Share client records through your portal or ours, with your checklist and any prior-year file.</p></li><li><span class="n mono">02</span><h3>We prepare</h3><p>Bookkeeping clean-up, year-end entries, working papers, draft statements and the return, prepared in your software where possible.</p></li><li><span class="n mono">03</span><h3>You review</h3><p>You receive a review-ready file with a memo of open items and judgement calls. We clear review notes the same week.</p></li><li><span class="n mono">04</span><h3>You sign and deliver</h3><p>Your firm issues the report and files the return under its own name. We stay invisible to your client.</p></li></ol></div></section>
+<section class="sec alt"><div class="wrap aud">
+<article class="aud-card"><h3>What we prepare</h3><ul class="ticks"><li>Year-end working papers and lead sheets</li><li>Draft financial statements for CSRS 4200 compilation engagements</li><li>T2 corporate returns</li><li>T1 personal returns, including T2125 and T776 schedules</li><li>T4, T4A and T5 slip preparation</li><li>Bookkeeping clean-up before the file reaches your staff</li></ul></article>
+<article class="aud-card"><h3>Working terms</h3><ul class="ticks"><li>Signed confidentiality agreement before any client data is shared</li><li>Per-file or monthly capacity pricing</li><li>A named lead accountant for your firm</li><li>Overlap with Canadian business hours for calls and review notes</li></ul></article></div></section><section class="band"><div class="wrap band-in">
+<div><h2>Find out where your books stand</h2><p>Send us your last bank statement and your most recent return. We&#x27;ll tell you what&#x27;s missing, what&#x27;s due, and what it will cost to fix, at no charge.</p></div>
+<a class="btn btn-light" href="#contact">Book a free review</a></div></section></section>
+
+<!-- ============ PRICING ============ -->
+<section class="view" id="v-pricing" data-title="Pricing | AccLEADS">
+<section class="page-hero"><div class="wrap"><p class="eyebrow">Pricing</p><h1>Fixed fees, agreed before we start</h1>
+<p class="lede">Every engagement starts with a free review and a written quote. Fees depend on transaction volume, number of accounts and how current your records are.</p></div></section>
+<section class="sec"><div class="wrap"><div class="plans"><article class="plan"><h3>Essentials</h3><p class="price">Quoted after your free review</p><p class="for">Sole proprietors and small businesses with simple monthly activity</p><ul class="ticks"><li>Monthly bookkeeping and reconciliations</li><li>Quarterly or annual GST/HST return</li><li>Annual financial statements</li><li>Owner&#x27;s T1 return</li></ul><a class="btn btn-ghost" href="#contact">Get my quote</a></article><article class="plan featured"><span class="tag">Most popular</span><h3>Corporate</h3><p class="price">Quoted after your free review</p><p class="for">Incorporated businesses and professional corporations</p><ul class="ticks"><li>Everything in Essentials</li><li>Year-end file and T2 corporate return</li><li>T4 and T5 slips for the owner</li><li>Salary vs. dividend planning call</li></ul><a class="btn" href="#contact">Get my quote</a></article><article class="plan"><h3>Catch-Up</h3><p class="price">Fixed project fee</p><p class="for">Businesses one or more years behind</p><ul class="ticks"><li>Rebuild of all missing periods</li><li>Overdue GST/HST, T1 and T2 returns</li><li>Handover into monthly bookkeeping</li><li>Quoted after a free review</li></ul><a class="btn btn-ghost" href="#contact">Get my quote</a></article></div>
+<p class="fine">Add-ons quoted separately: extra T1 returns for family members, payroll processing, prior-year returns and CRA correspondence.</p></div></section><section class="band"><div class="wrap band-in">
+<div><h2>Find out where your books stand</h2><p>Send us your last bank statement and your most recent return. We&#x27;ll tell you what&#x27;s missing, what&#x27;s due, and what it will cost to fix, at no charge.</p></div>
+<a class="btn btn-light" href="#contact">Book a free review</a></div></section></section>
+
+<!-- ============ ABOUT ============ -->
+<section class="view" id="v-about" data-title="About AccLEADS – Accounting Leaders">
+<section class="page-hero"><div class="wrap"><p class="eyebrow">About AccLEADS</p><h1>A small firm built around getting the basics exactly right</h1></div></section>
+<section class="sec"><div class="wrap split"><div><h2>Accounting Leaders</h2></div><div><p>AccLEADS – Accounting Leaders was set up to do a short list of things very well: bookkeeping, catch-up work, year-end files, T1, T2, T4 and T5 returns, and support for compilation engagements.</p><p>We deliberately don&#x27;t try to be everything. Narrowing the work lets us build checklists, review steps and turnaround times that hold up every month and every busy season.</p><p>Our clients are Canadian business owners who want one dependable team for their books and returns, and CPA firms who need trained preparers they can trust with their clients.</p></div></div></section>
+<section class="sec alt"><div class="wrap"><div class="sec-head"><h2>What we stand for</h2></div><dl class="why"><div><dt>Accuracy first</dt><dd>Every reconciliation ties out before a number is reported.</dd></div><div><dt>On time, every time</dt><dd>We plan backwards from your deadlines, not forwards from our inbox.</dd></div><div><dt>Plain language</dt><dd>We explain what your numbers mean, without jargon.</dd></div><div><dt>Confidential by default</dt><dd>Client data stays in secure systems with access limited to your file team.</dd></div></dl></div></section>
+<section class="sec"><div class="wrap"><div class="sec-head"><h2>Our team</h2></div><div class="placeholder"><strong>Team profiles coming soon</strong><p>Team member details have not been added yet. Each profile will list the team member&#x27;s name, designation (for example CPA, ACCA or CA), years of experience, and a short bio. Please send the team details to complete this section.</p></div></div></section><section class="band"><div class="wrap band-in">
+<div><h2>Find out where your books stand</h2><p>Send us your last bank statement and your most recent return. We&#x27;ll tell you what&#x27;s missing, what&#x27;s due, and what it will cost to fix, at no charge.</p></div>
+<a class="btn btn-light" href="#contact">Book a free review</a></div></section></section>
+
+<!-- ============ FAQ ============ -->
+<section class="view" id="v-faq" data-title="FAQ | AccLEADS">
+<section class="page-hero"><div class="wrap"><p class="eyebrow">FAQ</p><h1>Questions owners and firms ask us</h1></div></section>
+<section class="sec"><div class="wrap narrow"><details><summary>Do you work with businesses anywhere in Canada?</summary><p>Yes. We work remotely with clients across Canada. Tell us your province during the free review so we can confirm we cover any provincial filings you need.</p></details><details><summary>I&#x27;m two years behind on my books and taxes. Where do we start?</summary><p>With a free review. We look at your bank statements, prior returns and any CRA letters, then quote a fixed fee to rebuild the missing years and file what&#x27;s overdue. Getting current is usually less painful than owners expect.</p></details><details><summary>Which accounting software do you use?</summary><p>We work in QuickBooks Online, Xero, Sage and Wave. If you don&#x27;t have software yet, we&#x27;ll recommend one and set it up.</p></details><details><summary>What is the difference between a compilation engagement and a Notice to Reader?</summary><p>They are the same type of service. Since periods ending on or after December 14, 2021, Canadian standard CSRS 4200 replaced the Notice to Reader with a Compilation Engagement Report and added a required note describing the basis of accounting. A compilation provides no assurance; it is not an audit or a review.</p></details><details><summary>Can AccLEADS issue a compilation engagement report?</summary><p>[Edit to match your licensing.] We prepare the compiled financial statements and working papers. The engagement report is issued by a licensed public accounting firm, either your existing CPA or one we coordinate with.</p></details><details><summary>When are my T4 and T5 slips due?</summary><p>By the last day of February for the previous calendar year, both to the CRA and to the people receiving them. If that date falls on a weekend, the next business day applies. Filing more than five slips of a type requires electronic filing.</p></details><details><summary>When is my corporation&#x27;s T2 due?</summary><p>Six months after your fiscal year-end. Tax owing is due sooner: two months after year-end, or three months for many Canadian-controlled private corporations that qualify for the small business deduction.</p></details><details><summary>How do you charge?</summary><p>Monthly services have a fixed monthly fee. Catch-up and year-end projects have a fixed project fee. You receive the quote in writing before any work begins.</p></details><details><summary>How do you keep my information secure?</summary><p>Documents are exchanged through a secure client portal, access is limited to the staff working on your file, and team members sign confidentiality agreements. We never ask you to send banking passwords.</p></details><details><summary>I&#x27;m a CPA firm. Will my client know you prepared the file?</summary><p>Not unless you tell them. We work under your firm&#x27;s name and process, and your client relationship stays entirely yours.</p></details></div></section><section class="band"><div class="wrap band-in">
+<div><h2>Find out where your books stand</h2><p>Send us your last bank statement and your most recent return. We&#x27;ll tell you what&#x27;s missing, what&#x27;s due, and what it will cost to fix, at no charge.</p></div>
+<a class="btn btn-light" href="#contact">Book a free review</a></div></section></section>
+
+<!-- ============ CONTACT ============ -->
+<section class="view" id="v-contact" data-title="Contact AccLEADS | Book a Free Review">
+<section class="page-hero"><div class="wrap"><p class="eyebrow">Contact</p><h1>Book a free review</h1><p class="lede">Tell us a little about your business and what you need. We&#x27;ll reply within one business day with next steps and a list of documents for the review.</p></div></section>
+<section class="sec"><div class="wrap contact">
+<form id="review-form" class="form-card" novalidate>
+<div class="row2"><label for="f-name">Full name<input id="f-name" name="name" required autocomplete="name"></label>
+<label for="f-email">Email<input id="f-email" name="email" type="email" required autocomplete="email"></label></div>
+<div class="row2"><label for="f-phone">Phone <span class="opt">(optional)</span><input id="f-phone" name="phone" type="tel" autocomplete="tel"></label>
+<label for="f-who">I am a<select id="f-who" name="who"><option>Business owner</option><option>Individual</option><option>CPA firm</option></select></label></div>
+<div class="row2"><label for="f-svc">Service needed<select id="f-svc" name="service"><option>Bookkeeping</option><option>Catch-Up &amp; Clean-Up</option><option>Year-End Files</option><option>T1 Personal Tax Returns</option><option>T2 Corporate Tax Returns</option><option>T4 &amp; T5 Slips</option><option>Compilation Engagement Support</option><option>Not sure yet</option></select></label>
+<label for="f-ye">Fiscal year-end<input id="f-ye" name="yearend" placeholder="e.g. December 31"></label></div>
+<label for="f-behind">How current are your books?<select id="f-behind" name="behind"><option>Up to date</option><option>1–6 months behind</option><option>6–12 months behind</option><option>More than a year behind</option></select></label>
+<label for="f-msg">Message<textarea id="f-msg" name="message" rows="4"></textarea></label>
+<button class="btn" type="submit">Request my free review</button>
+<p id="form-status" class="form-status" role="status" hidden></p>
+</form>
+<aside class="contact-side">
+<div class="side-block"><h3>Phone</h3><p class="mono">[+1 (000) 000-0000]</p><p style="font-size:.82rem;color:var(--muted);margin-top:.4rem">Placeholder: add the real phone number before launch.</p></div>
+<div class="side-block"><h3>Email</h3><p class="mono">[hello@accleads.ca]</p><p style="font-size:.82rem;color:var(--muted);margin-top:.4rem">Placeholder: add the real email address before launch.</p></div>
+<div class="side-block"><h3>Office</h3><p>[Office address]</p><p style="font-size:.82rem;color:var(--muted);margin-top:.4rem">Placeholder: add the real office address before launch.</p></div>
+<div class="side-block"><h3>Hours</h3><p>Monday to Friday, 9:00 a.m. to 6:00 p.m. Eastern Time</p></div>
+</aside></div></section></section>
+</main>
+<footer class="foot"><div class="wrap foot-in">
+<div><a class="brand" href="#home"><span class="mark" aria-hidden="true"><svg viewBox="0 0 40 40" width="42" height="42"><rect x="0.5" y="0.5" width="39" height="39" rx="4" class="m-bg"/><path d="M10 31 L20 8 L30 31" fill="none" class="m-a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><line x1="13" y1="22" x2="27" y2="22" class="m-rule" stroke-width="2"/><line x1="12" y1="25.5" x2="28" y2="25.5" class="m-rule" stroke-width="2"/></svg></span><span><b>AccLEADS</b><small>Accounting Leaders</small></span></a><p>Bookkeeping, catch-up, year-end and Canadian tax returns for business owners and CPA firms.</p></div>
+<div><h4>Services</h4><a href="#bookkeeping">Bookkeeping</a><a href="#catch-up">Catch-Up &amp; Clean-Up</a><a href="#year-end">Year-End Files</a><a href="#t1-personal-tax">T1 Personal Tax Returns</a><a href="#t2-corporate-tax">T2 Corporate Tax Returns</a><a href="#t4-t5-slips">T4 &amp; T5 Slips</a><a href="#compilation-engagements">Compilation Engagement Support</a></div>
+<div><h4>Company</h4><a href="#cpa-firms">For CPA Firms</a><a href="#pricing">Pricing</a><a href="#about">About</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></div>
+<div><h4>Contact</h4><p class="mono">[+1 (000) 000-0000]</p><p class="mono">[hello@accleads.ca]</p><p>Monday to Friday, 9:00 a.m. to 6:00 p.m. Eastern Time</p></div>
+</div><div class="wrap legal"><p>Information on this website is general in nature and is not tax, legal or accounting advice for your situation. Compilation engagement reports are issued by licensed public accounting firms.</p><p>© 2026 AccLEADS. All rights reserved.</p></div></footer>
+<script>(function(){
+  var views = Array.prototype.slice.call(document.querySelectorAll('.view'));
+  var navLinks = document.querySelectorAll('[data-nav]');
+  var nav = document.getElementById('main-nav');
+  var menuBtn = document.getElementById('menu-btn');
+  var top = document.getElementById('top');
+
+  function show(){
+    var key = (location.hash || '#home').slice(1);
+    var target = document.getElementById('v-' + key);
+    if (!target) { target = document.getElementById('v-home'); key = 'home'; }
+    views.forEach(function(v){ v.hidden = v !== target; });
+    navLinks.forEach(function(a){
+      var k = a.getAttribute('data-nav');
+      var on = k === key || (k === 'services' && target.querySelector('.crumb'));
+      a.classList.toggle('on', !!on);
+    });
+    if (target.dataset.title) document.title = target.dataset.title;
+    nav.classList.remove('open'); menuBtn.setAttribute('aria-expanded','false');
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener('hashchange', show);
+  show();
+
+  menuBtn.addEventListener('click', function(){
+    var open = nav.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  window.addEventListener('scroll', function(){
+    top.classList.toggle('scrolled', window.scrollY > 8);
+  }, {passive:true});
+
+  var themeBtn = document.getElementById('theme-btn');
+  var saved = null;
+  try { saved = localStorage.getItem('accleads-theme'); } catch (e) {}
+  if (saved) { document.documentElement.setAttribute('data-theme', saved); }
+  function syncThemeLabel(){
+    var dark = document.documentElement.getAttribute('data-theme') === 'dark' ||
+      (!document.documentElement.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    themeBtn.textContent = dark ? 'Light mode' : 'Dark mode';
+  }
+  themeBtn.addEventListener('click', function(){
+    var cur = document.documentElement.getAttribute('data-theme');
+    var next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('accleads-theme', next); } catch (e) {}
+    syncThemeLabel();
+  });
+  syncThemeLabel();
+
+  var form = document.getElementById('review-form');
+  var status = document.getElementById('form-status');
+  form.addEventListener('submit', function(ev){
+    ev.preventDefault();
+    var name = document.getElementById('f-name'), email = document.getElementById('f-email');
+    if (!name.value.trim() || !/^\S+@\S+\.\S+$/.test(email.value.trim())) {
+      status.hidden = false;
+      status.textContent = 'Please enter your name and a valid email address so we can reply.';
+      (!name.value.trim() ? name : email).focus();
+      return;
+    }
+    status.hidden = false;
+    status.textContent = 'Thanks, ' + name.value.trim().split(' ')[0] + '. Your request is ready. (Site preview: connect this form to your inbox before launch so requests are delivered.)';
+  });
+})();
+</script>
+</body>
+</html>
